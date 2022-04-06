@@ -1,3 +1,4 @@
+import 'package:bmi_calculator/floating_button.dart';
 import 'package:bmi_calculator/reusableContainer.dart';
 import 'package:bmi_calculator/reusablecolumn.dart';
 import 'package:bmi_calculator/style.dart';
@@ -7,7 +8,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 const activecolor = Color(0xFF1D1E33);
 const inactivecolor = Color(0xFF111323);
 enum genderType { male, female }
-
 
 void main() {
   runApp(BMIcalculator());
@@ -33,7 +33,12 @@ class InputPage extends StatefulWidget {
 }
 
 class _InputPageState extends State<InputPage> {
-  int height=180;
+  int height = 180;
+  int weight = 40;
+  int Age = 20;
+
+  double heightFt = 3;
+
   Color maleCardColor = inactivecolor;
   Color femaleCardColor = inactivecolor;
 
@@ -94,39 +99,141 @@ class _InputPageState extends State<InputPage> {
               CardChild: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text("Height", style: mytextstyle),
-                  SizedBox(height: 10,),
+                  Text("HEIGHT", style: mytextstyle),
+                  SizedBox(
+                    height: 10,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.baseline,
                     textBaseline: TextBaseline.alphabetic,
-                    children:  [
-                      Text(height.toString(), style: mytextstyle),
+                    children: [
+                      Text(height.toString(), style: MyNumberStyle),
                       Text("cm", style: mytextstyle),
+                      SizedBox(
+                        width: 150,
+                      ),
+                      Text(heightFt.toStringAsFixed(2), style: MyNumberStyle),
+                      Text("ft", style: mytextstyle),
                     ],
                   ),
-                  Slider(value: height.toDouble(),
+                  Slider(
+                      value: height.toDouble(),
                       min: 120,
                       max: 220,
                       activeColor: Color(0xFFEB1555),
                       inactiveColor: Color(0xFF8D8E98),
-                      onChanged:(double newValue){
-                    setState(() {
-                      height=newValue.round();
-                    });
-                  }),
+                      onChanged: (double newValue) {
+                        setState(() {
+                          height = newValue.round();
 
+                          heightFt = height * 0.0328;
+                        });
+                      }),
                 ],
               ),
             )),
             Expanded(
                 child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Expanded(child: ReusableContainer(color: activecolor)),
-                Expanded(child: ReusableContainer(color: activecolor)),
+                Expanded(
+                    child: ReusableContainer(
+                        CardChild: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "WEIGHT",
+                              style: mytextstyle,
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              weight.toString(),
+                              style: MyNumberStyle,
+                            ),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                floating_button(
+                                  icon: FontAwesomeIcons.minus,
+                                  onPressed: () {
+                                    setState(() {
+                                      weight--;
+                                    });
+                                  },
+                                ),
+                                SizedBox(
+                                  width: 15,
+                                ),
+                                floating_button(
+                                  onPressed: () {
+                                    setState(() {
+                                      weight++;
+                                    });
+                                  },
+                                  icon: FontAwesomeIcons.plus,
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                        color: activecolor)),
+                Expanded(
+                    child: ReusableContainer(
+                        CardChild: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "AGE",
+                              style: mytextstyle,
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              Age.toString(),
+                              style: MyNumberStyle,
+                            ),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                floating_button(
+                                  icon: FontAwesomeIcons.minus,
+                                  onPressed: () {
+                                    setState(() {
+                                      Age--;
+                                    });
+                                  },
+                                ),
+                                SizedBox(
+                                  width: 15,
+                                ),
+                                floating_button(
+                                  onPressed: () {
+                                    setState(() {
+                                      Age++;
+                                    });
+                                  },
+                                  icon: FontAwesomeIcons.plus,
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                        color: activecolor)),
               ],
             )),
             Container(
+              alignment: Alignment.center,
+              child: Text("CALCULATE",style: mytextstyle,),
               color: Color(0xFFEB1555),
               margin: EdgeInsets.only(top: 10.00),
               width: double.infinity,
