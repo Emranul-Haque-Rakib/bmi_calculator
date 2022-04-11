@@ -13,16 +13,13 @@ class ReusableColumn extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Icon(icon,
+        Icon(
+          icon,
           size: 80.00,
           color: Colors.white,
         ),
         SizedBox(height: 15.00),
-        Text(text, style:TextStyle(
-            fontSize: 18,
-            color: Colors.grey
-        ))
-
+        Text(text, style: TextStyle(fontSize: 18, color: Colors.grey))
       ],
     );
   }

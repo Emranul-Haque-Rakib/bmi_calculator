@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class ReusableContainer extends StatelessWidget {
-  ReusableContainer({required this.color, this.CardChild,this.onPress});
+  ReusableContainer({required this.color, this.CardChild, this.onPress});
 
   final Widget? CardChild;
-  final  Color color;
+  final Color color;
 
   final void Function()? onPress;
 

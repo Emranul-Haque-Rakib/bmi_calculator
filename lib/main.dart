@@ -1,9 +1,13 @@
+import 'package:bmi_calculator/about_us.dart';
 import 'package:bmi_calculator/floating_button.dart';
+import 'package:bmi_calculator/result_page.dart';
 import 'package:bmi_calculator/reusableContainer.dart';
 import 'package:bmi_calculator/reusablecolumn.dart';
 import 'package:bmi_calculator/style.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'result_page.dart';
+import 'Calculation.dart';
 
 const activecolor = Color(0xFF1D1E33);
 const inactivecolor = Color(0xFF111323);
@@ -33,11 +37,11 @@ class InputPage extends StatefulWidget {
 }
 
 class _InputPageState extends State<InputPage> {
-  int height = 180;
-  int weight = 40;
+  int height = 120;
+  double weight = 40;
   int Age = 20;
 
-  double heightFt = 3;
+  double heightFt = 4;
 
   Color maleCardColor = inactivecolor;
   Color femaleCardColor = inactivecolor;
@@ -119,7 +123,7 @@ class _InputPageState extends State<InputPage> {
                   ),
                   Slider(
                       value: height.toDouble(),
-                      min: 120,
+                      min: 100,
                       max: 220,
                       activeColor: Color(0xFFEB1555),
                       inactiveColor: Color(0xFF8D8E98),
@@ -231,14 +235,62 @@ class _InputPageState extends State<InputPage> {
                         color: activecolor)),
               ],
             )),
-            Container(
-              alignment: Alignment.center,
-              child: Text("CALCULATE",style: mytextstyle,),
-              color: Color(0xFFEB1555),
-              margin: EdgeInsets.only(top: 10.00),
-              width: double.infinity,
-              height: 80.00,
+            GestureDetector(
+              onTap: () {
+                bmicalculator calc =
+                    bmicalculator(height: height, weight: weight);
+
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ResultPage(
+                              bmi: calc.Calculation(),
+                              bmiresult: calc.getResult(),
+                              interpretation: calc.getInterpretation(),
+                            )));
+              },
+              child: Container(
+                alignment: Alignment.center,
+                child: Text(
+                  "CALCULATE",
+                  style: mytextstyle,
+                ),
+                color: Color(0xFFEB1555),
+                margin: EdgeInsets.only(top: 10.00),
+                width: double.infinity,
+                height: 80.00,
+              ),
             )
+          ],
+        ),
+      ),
+      drawer: Drawer(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Text(
+              "Developed By",
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+            ),
+            Image.asset("image/DeepDive.png"),
+            ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.red),
+                ),
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => about()));
+                },
+                child: Text(
+                  "About us",
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ))
           ],
         ),
       ),
